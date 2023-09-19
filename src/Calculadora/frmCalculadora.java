@@ -1,9 +1,18 @@
 package Calculadora;
 
+import java.awt.TextField;
+
 public class frmCalculadora extends javax.swing.JFrame {
 
+    private boolean igual, inicio = true, ope1, ope2;
+    private double a,b,c,memoria = 0, resultado, valor1, valor2;
+    private double cos, sin, tan, acos, asin, atan;
+    private String cadena, funciones, tipoOperacion; 
+    
     public frmCalculadora() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        txtMemoria.setVisible(igual);
     }
 
     @SuppressWarnings("unchecked")
@@ -11,12 +20,13 @@ public class frmCalculadora extends javax.swing.JFrame {
     private void initComponents() {
 
         PanPantalla = new javax.swing.JPanel();
-        txtOperaciones = new javax.swing.JLabel();
+        txtPrevio = new javax.swing.JLabel();
         txtResultados = new javax.swing.JLabel();
+        txtMemoria = new javax.swing.JLabel();
         PanBotones = new javax.swing.JPanel();
         rbtnSexages = new javax.swing.JRadioButton();
         rbtnRadianes = new javax.swing.JRadioButton();
-        btnFlecha = new javax.swing.JButton();
+        btnRetroceso = new javax.swing.JButton();
         btnMmenos = new javax.swing.JButton();
         btnFactorial = new javax.swing.JButton();
         btnTangente1 = new javax.swing.JButton();
@@ -34,7 +44,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         btnCambioS = new javax.swing.JButton();
         btnCoseno = new javax.swing.JButton();
         btn_pi = new javax.swing.JButton();
-        jButton27 = new javax.swing.JButton();
+        btnXmenos1 = new javax.swing.JButton();
         btnLogaritmo = new javax.swing.JButton();
         btnPotencia2 = new javax.swing.JButton();
         btn10Potencia = new javax.swing.JButton();
@@ -43,7 +53,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         btn_e = new javax.swing.JButton();
         btnInversa = new javax.swing.JButton();
         btnSeno = new javax.swing.JButton();
-        jButton36 = new javax.swing.JButton();
+        btnEXP = new javax.swing.JButton();
         btn_C = new javax.swing.JButton();
         btnDivision = new javax.swing.JButton();
         btnPorcentaje = new javax.swing.JButton();
@@ -69,15 +79,19 @@ public class frmCalculadora extends javax.swing.JFrame {
 
         PanPantalla.setBackground(new java.awt.Color(244, 253, 251));
 
-        txtOperaciones.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        txtOperaciones.setForeground(new java.awt.Color(67, 75, 85));
-        txtOperaciones.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        txtOperaciones.setText("123*234");
+        txtPrevio.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        txtPrevio.setForeground(new java.awt.Color(67, 75, 85));
+        txtPrevio.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         txtResultados.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
         txtResultados.setForeground(new java.awt.Color(67, 75, 85));
         txtResultados.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        txtResultados.setText("12345");
+        txtResultados.setText("0");
+
+        txtMemoria.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtMemoria.setForeground(new java.awt.Color(67, 75, 85));
+        txtMemoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtMemoria.setText("M");
 
         javax.swing.GroupLayout PanPantallaLayout = new javax.swing.GroupLayout(PanPantalla);
         PanPantalla.setLayout(PanPantallaLayout);
@@ -86,7 +100,10 @@ public class frmCalculadora extends javax.swing.JFrame {
             .addGroup(PanPantallaLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(PanPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtOperaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(PanPantallaLayout.createSequentialGroup()
+                        .addComponent(txtMemoria, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPrevio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(txtResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -94,8 +111,10 @@ public class frmCalculadora extends javax.swing.JFrame {
             PanPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanPantallaLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(txtOperaciones)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(PanPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtPrevio, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(txtMemoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -106,6 +125,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         PanBotones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rbtnSexages.setForeground(new java.awt.Color(67, 75, 85));
+        rbtnSexages.setSelected(true);
         rbtnSexages.setText("Sexages");
         rbtnSexages.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,23 +143,23 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
         PanBotones.add(rbtnRadianes, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
 
-        btnFlecha.setBackground(new java.awt.Color(204, 204, 204));
-        btnFlecha.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        btnFlecha.setForeground(new java.awt.Color(0, 153, 0));
-        btnFlecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
-        btnFlecha.setText("←");
-        btnFlecha.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnFlecha.setFocusPainted(false);
-        btnFlecha.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnFlecha.setPreferredSize(new java.awt.Dimension(50, 50));
-        btnFlecha.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
-        btnFlecha.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1_pressed.png"))); // NOI18N
-        btnFlecha.addActionListener(new java.awt.event.ActionListener() {
+        btnRetroceso.setBackground(new java.awt.Color(204, 204, 204));
+        btnRetroceso.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        btnRetroceso.setForeground(new java.awt.Color(0, 153, 0));
+        btnRetroceso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btnRetroceso.setText("←");
+        btnRetroceso.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnRetroceso.setFocusPainted(false);
+        btnRetroceso.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRetroceso.setPreferredSize(new java.awt.Dimension(50, 50));
+        btnRetroceso.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btnRetroceso.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1_pressed.png"))); // NOI18N
+        btnRetroceso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFlechaActionPerformed(evt);
+                btnRetrocesoActionPerformed(evt);
             }
         });
-        PanBotones.add(btnFlecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 50, 50));
+        PanBotones.add(btnRetroceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 50, 50));
 
         btnMmenos.setBackground(new java.awt.Color(204, 204, 204));
         btnMmenos.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -447,23 +467,23 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
         PanBotones.add(btn_pi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 50, 50));
 
-        jButton27.setBackground(new java.awt.Color(204, 204, 204));
-        jButton27.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
-        jButton27.setForeground(new java.awt.Color(67, 75, 85));
-        jButton27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
-        jButton27.setText("x^(-1)");
-        jButton27.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton27.setFocusPainted(false);
-        jButton27.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton27.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton27.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
-        jButton27.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1_pressed.png"))); // NOI18N
-        jButton27.addActionListener(new java.awt.event.ActionListener() {
+        btnXmenos1.setBackground(new java.awt.Color(204, 204, 204));
+        btnXmenos1.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        btnXmenos1.setForeground(new java.awt.Color(67, 75, 85));
+        btnXmenos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btnXmenos1.setText("x^(-1)");
+        btnXmenos1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnXmenos1.setFocusPainted(false);
+        btnXmenos1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnXmenos1.setPreferredSize(new java.awt.Dimension(50, 50));
+        btnXmenos1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btnXmenos1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1_pressed.png"))); // NOI18N
+        btnXmenos1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton27ActionPerformed(evt);
+                btnXmenos1ActionPerformed(evt);
             }
         });
-        PanBotones.add(jButton27, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 50, 50));
+        PanBotones.add(btnXmenos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 50, 50));
 
         btnLogaritmo.setBackground(new java.awt.Color(204, 204, 204));
         btnLogaritmo.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -609,23 +629,23 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
         PanBotones.add(btnSeno, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 50, 50));
 
-        jButton36.setBackground(new java.awt.Color(204, 204, 204));
-        jButton36.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jButton36.setForeground(new java.awt.Color(67, 75, 85));
-        jButton36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
-        jButton36.setText("EXP");
-        jButton36.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton36.setFocusPainted(false);
-        jButton36.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton36.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton36.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
-        jButton36.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1_pressed.png"))); // NOI18N
-        jButton36.addActionListener(new java.awt.event.ActionListener() {
+        btnEXP.setBackground(new java.awt.Color(204, 204, 204));
+        btnEXP.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnEXP.setForeground(new java.awt.Color(67, 75, 85));
+        btnEXP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btnEXP.setText("EXP");
+        btnEXP.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnEXP.setFocusPainted(false);
+        btnEXP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEXP.setPreferredSize(new java.awt.Dimension(50, 50));
+        btnEXP.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btnEXP.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1_pressed.png"))); // NOI18N
+        btnEXP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton36ActionPerformed(evt);
+                btnEXPActionPerformed(evt);
             }
         });
-        PanBotones.add(jButton36, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 50, 50));
+        PanBotones.add(btnEXP, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 50, 50));
 
         btn_C.setBackground(new java.awt.Color(204, 204, 204));
         btn_C.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -957,197 +977,456 @@ public class frmCalculadora extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnSexagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnSexagesActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_rbtnSexagesActionPerformed
 
     private void btn_piActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_piActionPerformed
-        // TODO add your handling code here:
+        txtPrevio.setText("PI ");
+        txtResultados.setText(Math.PI+" ");
     }//GEN-LAST:event_btn_piActionPerformed
 
     private void rbtnRadianesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnRadianesActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_rbtnRadianesActionPerformed
 
     private void btnCosenoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosenoActionPerformed
-        // TODO add your handling code here:
+        funciones = "cos";
+        Trigonometria();
     }//GEN-LAST:event_btnCosenoActionPerformed
 
     private void btnSenoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSenoActionPerformed
-        // TODO add your handling code here:
+        funciones = "sin";
+        Trigonometria();
     }//GEN-LAST:event_btnSenoActionPerformed
 
     private void btnTangenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTangenteActionPerformed
-        // TODO add your handling code here:
+        funciones = "tan";
+        Trigonometria();
     }//GEN-LAST:event_btnTangenteActionPerformed
 
     private void btnCoseno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoseno1ActionPerformed
-        // TODO add your handling code here:
+        funciones = "acos";
+        Trigonometria();
     }//GEN-LAST:event_btnCoseno1ActionPerformed
 
     private void btnSeno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeno1ActionPerformed
-        // TODO add your handling code here:
+        funciones = "asin";
+        Trigonometria();
     }//GEN-LAST:event_btnSeno1ActionPerformed
 
     private void btnTangente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTangente1ActionPerformed
-        // TODO add your handling code here:
+        funciones = "atan";
+        Trigonometria();
     }//GEN-LAST:event_btnTangente1ActionPerformed
 
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton27ActionPerformed
+    private void btnXmenos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXmenos1ActionPerformed
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText(valor1+" ^-1");
+        txtResultados.setText(Math.pow(valor1, -1)+" ");
+    }//GEN-LAST:event_btnXmenos1ActionPerformed
 
     private void btnPotenciaYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPotenciaYActionPerformed
-        // TODO add your handling code here:
+        inicio = true;
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText(valor1+" ^");
+        tipoOperacion = "potencia";
+        ope1 = false;
+        igual = true;
     }//GEN-LAST:event_btnPotenciaYActionPerformed
 
     private void btn_eActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eActionPerformed
-        // TODO add your handling code here:
+        txtPrevio.setText("E ");
+        txtResultados.setText(Math.E+" ");
     }//GEN-LAST:event_btn_eActionPerformed
 
     private void btnRaizYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRaizYActionPerformed
-        // TODO add your handling code here:
+        inicio = true;
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText(valor1+"yroot ");
+        tipoOperacion = "raizx";
+        ope1 = false;
+        igual = true;
     }//GEN-LAST:event_btnRaizYActionPerformed
 
     private void btnPotencia3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPotencia3ActionPerformed
-        // TODO add your handling code here:
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText("cube("+valor1+")");
+        txtResultados.setText(Math.pow(valor1, 3)+" ");
     }//GEN-LAST:event_btnPotencia3ActionPerformed
 
     private void btnFactorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFactorialActionPerformed
-        // TODO add your handling code here:
+        a=1;
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText("fact("+valor1+")");
+        
+        for(b=1; b<=valor1; b++)
+            a*=b;
+        
+        txtResultados.setText(a+" ");
     }//GEN-LAST:event_btnFactorialActionPerformed
 
     private void btnRaiz3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRaiz3ActionPerformed
-        // TODO add your handling code here:
+        valor1 = Double.parseDouble(txtResultados.getText());
+        a=1;
+        b=3;
+        c=a/b;
+        txtPrevio.setText("cuberroot("+valor1+")");
+        txtResultados.setText(Math.pow(valor1, c)+" ");
     }//GEN-LAST:event_btnRaiz3ActionPerformed
 
     private void btnPotencia2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPotencia2ActionPerformed
-        // TODO add your handling code here:
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText("cuadrado("+valor1+")");
+        txtResultados.setText(Math.pow(valor1, 2)+" ");
     }//GEN-LAST:event_btnPotencia2ActionPerformed
 
     private void btn10PotenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10PotenciaActionPerformed
-        // TODO add your handling code here:
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText("pow10("+valor1+")");
+        txtResultados.setText(Math.pow(10, valor1)+" ");
     }//GEN-LAST:event_btn10PotenciaActionPerformed
 
-    private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton36ActionPerformed
+    private void btnEXPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEXPActionPerformed
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtResultados.setText(Math.exp(valor1)+" ");
+    }//GEN-LAST:event_btnEXPActionPerformed
 
     private void btnLogaritmoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogaritmoActionPerformed
-        // TODO add your handling code here:
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText("log("+valor1+")");
+        txtResultados.setText(Math.log(valor1)+" ");
     }//GEN-LAST:event_btnLogaritmoActionPerformed
 
-    private void btnFlechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFlechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnFlechaActionPerformed
+    private void btnRetrocesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocesoActionPerformed
+        if(txtResultados.getText().length()>0){
+            txtResultados.setText(txtResultados.getText().substring(0,txtResultados.getText().length()-1));
+            if(txtResultados.getText().length()==0){
+                txtResultados.setText("0");
+                inicio = true;                
+            }
+        }
+    }//GEN-LAST:event_btnRetrocesoActionPerformed
 
     private void btn_CEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CEActionPerformed
-        // TODO add your handling code here:
+        txtResultados.setText("0");
+        txtPrevio.setText("");
+        inicio = true;
+        funciones = "";
     }//GEN-LAST:event_btn_CEActionPerformed
 
     private void btn_CActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CActionPerformed
-        // TODO add your handling code here:
+        txtResultados.setText("0");
+        txtPrevio.setText("");
+        inicio = true;
+        funciones = "";
+        ope1 = true;
+        ope2 = true;
+        igual = true;
+        valor1 = 0;
+        valor2 = 0;
+        resultado = 0;
     }//GEN-LAST:event_btn_CActionPerformed
 
     private void btnCambioSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambioSActionPerformed
-        // TODO add your handling code here:
+        double n1 = 0, n2, n3;
+        n2 = Double.parseDouble(txtResultados.getText());
+        n3 = n1-n2;
+        txtResultados.setText(n3+" ");
+        
     }//GEN-LAST:event_btnCambioSActionPerformed
 
     private void btnRaiz2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRaiz2ActionPerformed
-        // TODO add your handling code here:
+        valor1 = Double.parseDouble(txtResultados.getText());
+        if(valor1>=0){
+            txtPrevio.setText("sqrt("+valor1+")");
+            txtResultados.setText(Math.sqrt(valor1)+" ");
+        } else {
+            txtResultados.setText("Error ...");
+        }
     }//GEN-LAST:event_btnRaiz2ActionPerformed
 
     private void btnDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisionActionPerformed
-        // TODO add your handling code here:
+        igual = true;
+        inicio = true;
+        Signos("/");
     }//GEN-LAST:event_btnDivisionActionPerformed
 
     private void btnPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPorcentajeActionPerformed
-        // TODO add your handling code here:
+        valor2 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText(txtPrevio.getText()+txtResultados.getText());
+        txtResultados.setText((valor1*valor2)/100+" ");
+        igual = true;
     }//GEN-LAST:event_btnPorcentajeActionPerformed
 
     private void btnMultiplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicacionActionPerformed
-        // TODO add your handling code here:
+        igual = true;
+        inicio = true;
+        Signos("*");
     }//GEN-LAST:event_btnMultiplicacionActionPerformed
 
     private void btnInversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInversaActionPerformed
-        // TODO add your handling code here:
+        valor1 = Double.parseDouble(txtResultados.getText());
+        txtPrevio.setText("reciproc( "+valor1+" )");
+        txtResultados.setText(1/valor1+" ");
     }//GEN-LAST:event_btnInversaActionPerformed
 
     private void btnRestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaActionPerformed
-        // TODO add your handling code here:
+        igual = true;
+        inicio = true;
+        Signos("-");
     }//GEN-LAST:event_btnRestaActionPerformed
 
     private void btnSumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumaActionPerformed
-        // TODO add your handling code here:
+        igual = true;
+        inicio = true;
+        Signos("+");
     }//GEN-LAST:event_btnSumaActionPerformed
 
     private void btnResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultadoActionPerformed
-        // TODO add your handling code here:
+        inicio = true;
+        ope1 = true;
+        if(igual = true){
+            if(tipoOperacion == null){
+                
+            } else {
+                valor2 = Double.parseDouble(txtResultados.getText());
+                txtPrevio.setText(txtPrevio.getText()+txtResultados.getText());
+                Operaciones(valor1, valor2);
+                igual = false;
+            }
+        } else {
+            txtPrevio.setText("");
+            Operaciones(valor1, valor2);
+        }
     }//GEN-LAST:event_btnResultadoActionPerformed
 
     private void btnPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuntoActionPerformed
-        // TODO add your handling code here:
+        if(txtResultados.getText().contains(".")){
+            
+        } else {
+            txtResultados.setText(txtResultados.getText()+".");
+            inicio = false;
+        }
     }//GEN-LAST:event_btnPuntoActionPerformed
 
     private void btn_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_0ActionPerformed
-        // TODO add your handling code here:
+        Numeros("0");
     }//GEN-LAST:event_btn_0ActionPerformed
 
     private void btn_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_1ActionPerformed
-        // TODO add your handling code here:
+        Numeros("1");
     }//GEN-LAST:event_btn_1ActionPerformed
 
     private void btn_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_2ActionPerformed
-        // TODO add your handling code here:
+        Numeros("2");
     }//GEN-LAST:event_btn_2ActionPerformed
 
     private void btn_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_3ActionPerformed
-        // TODO add your handling code here:
+        Numeros("3");
     }//GEN-LAST:event_btn_3ActionPerformed
 
     private void btn_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_4ActionPerformed
-        // TODO add your handling code here:
+        Numeros("4");
     }//GEN-LAST:event_btn_4ActionPerformed
 
     private void btn_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_5ActionPerformed
-        // TODO add your handling code here:
+        Numeros("5");
     }//GEN-LAST:event_btn_5ActionPerformed
 
     private void btn_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_6ActionPerformed
-        // TODO add your handling code here:
+        Numeros("6");
     }//GEN-LAST:event_btn_6ActionPerformed
 
     private void btn_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_7ActionPerformed
-        // TODO add your handling code here:
+        Numeros("7");
     }//GEN-LAST:event_btn_7ActionPerformed
 
     private void btn_8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_8ActionPerformed
-        // TODO add your handling code here:
+        Numeros("8");
     }//GEN-LAST:event_btn_8ActionPerformed
 
     private void btn_9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_9ActionPerformed
-        // TODO add your handling code here:
+        Numeros("9");
     }//GEN-LAST:event_btn_9ActionPerformed
 
     private void btnMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMCActionPerformed
-        // TODO add your handling code here:
+        memoria=0;
+        txtMemoria.setVisible(false);
     }//GEN-LAST:event_btnMCActionPerformed
 
     private void btnMRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMRActionPerformed
-        // TODO add your handling code here:
+        txtResultados.setText(memoria+" ");
     }//GEN-LAST:event_btnMRActionPerformed
 
     private void btnMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMSActionPerformed
-        // TODO add your handling code here:
+        memoria = Double.parseDouble(txtResultados.getText());
+        txtMemoria.setVisible(true);
     }//GEN-LAST:event_btnMSActionPerformed
 
     private void btnMmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMmasActionPerformed
-        // TODO add your handling code here:
+        memoria = memoria+Double.parseDouble(txtResultados.getText());
+        txtMemoria.setVisible(true);
     }//GEN-LAST:event_btnMmasActionPerformed
 
     private void btnMmenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMmenosActionPerformed
-        // TODO add your handling code here:
+        memoria = memoria-Double.parseDouble(txtResultados.getText());
+        txtMemoria.setVisible(true);
     }//GEN-LAST:event_btnMmenosActionPerformed
 
+    public void Numeros(String n){
+        if(inicio==true){
+            txtResultados.setText(" ");
+            txtResultados.setText(n);
+            inicio=false;
+        } else{
+            txtResultados.setText(txtResultados.getText()+n);
+        }
+    }
+    
+    public void Signos(String n){
+        if(ope1=true){
+            valor1= Double.parseDouble(txtResultados.getText());
+            txtPrevio.setText("");
+            txtPrevio.setText(txtResultados.getText()+n);
+            ope1 = false;
+        } else {
+            if(ope2=true){
+                valor2= Double.parseDouble(txtResultados.getText());
+                txtPrevio.setText(txtResultados.getText()+n);
+                ope2 = false;
+            } else {
+                txtPrevio.setText(txtResultados.getText()+n);
+                Operaciones(resultado, valor2);
+            }
+        }
+        tipoOperacion = n;
+    }
+    
+    public void Operaciones(double v1, double v2){
+        switch(tipoOperacion){
+            case "+":
+                resultado = v1+v2;
+                txtResultados.setText(resultado+" ");
+                v1 = Double.parseDouble(txtResultados.getText());
+                break;
+            case "-":
+                resultado = v1-v2;
+                txtResultados.setText(resultado+" ");
+                v1 = Double.parseDouble(txtResultados.getText());
+                break;
+            case "*":
+                resultado = v1*v2;
+                txtResultados.setText(resultado+" ");
+                v1 = Double.parseDouble(txtResultados.getText());
+                break;
+            case "/":
+                if(v2==0){
+                    txtResultados.setText("Error en la operacion");
+                    break;
+                }
+                resultado = v1/v2;
+                txtResultados.setText(resultado+" ");
+                v1 = Double.parseDouble(txtResultados.getText());
+                break;
+            case "potencia":
+                resultado = Math.pow(valor1, valor2);
+                txtResultados.setText(resultado+" ");
+                break;
+            case "raizx":
+                if(valor2<=0){
+                    txtResultados.setText("Error...");
+                    break;
+                } else {
+                    txtPrevio.setText(valor2+" yroot");
+                    a=1;
+                    c=a/valor2;
+                    txtResultados.setText(Math.pow(a, c)+" ");
+                }
+        }
+    }
+    
+    public void Trigonometria(){
+        if(rbtnSexages.isSelected()){
+            switch (funciones) {
+                case "sin":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("sin("+valor1+")");
+                    sin = Math.sin(Math.PI*(valor1)/180);
+                    txtResultados.setText(sin+" ");
+                    break;
+                case "asin":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("asin("+valor1+")");
+                    asin = Math.asin(valor1)*180/Math.PI;
+                    txtResultados.setText(asin+" ");
+                    break;
+                case "cos":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("cos("+valor1+")");
+                    cos = Math.cos(Math.PI*(valor1)/180);
+                    txtResultados.setText(cos+" ");
+                    break;
+                case "acos":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("acos("+valor1+")");
+                    acos = Math.acos(valor1)*180/Math.PI;
+                    txtResultados.setText(acos+" ");
+                    break;
+                case "tan":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("tan("+valor1+")");
+                    tan = Math.tan(Math.PI*(valor1)/180);
+                    txtResultados.setText(tan+" ");
+                    break;
+                case "atan":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("atan("+valor1+")");
+                    atan = Math.atan(valor1)*180/Math.PI;
+                    txtResultados.setText(atan+" ");
+                    break;
+            }
+        } else if(rbtnRadianes.isSelected()){
+            switch (funciones) {
+                case "sin":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("sinr("+valor1+")");
+                    sin = Math.sin(valor1);
+                    txtResultados.setText(sin+" ");
+                    break;
+                case "asin":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("asinr("+valor1+")");
+                    asin = Math.asin(valor1);
+                    txtResultados.setText(asin+" ");
+                    break;
+                case "cos":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("cosr("+valor1+")");
+                    cos = Math.cos(valor1);
+                    txtResultados.setText(cos+" ");
+                    break;
+                case "acos":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("acosr("+valor1+")");
+                    acos = Math.acos(valor1);
+                    txtResultados.setText(acos+" ");
+                    break;
+                case "tan":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("tanr("+valor1+")");
+                    tan = Math.tan(valor1);
+                    txtResultados.setText(tan+" ");
+                    break;
+                case "atan":
+                    valor1 = Double.parseDouble(txtResultados.getText());
+                    txtPrevio.setText("atanr("+valor1+")");
+                    atan = Math.atan(valor1);
+                    txtResultados.setText(atan+" ");
+                    break;
+            }
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1191,8 +1470,8 @@ public class frmCalculadora extends javax.swing.JFrame {
     public javax.swing.JButton btnCoseno;
     public javax.swing.JButton btnCoseno1;
     public javax.swing.JButton btnDivision;
+    public javax.swing.JButton btnEXP;
     public javax.swing.JButton btnFactorial;
-    public javax.swing.JButton btnFlecha;
     public javax.swing.JButton btnInversa;
     public javax.swing.JButton btnLogaritmo;
     public javax.swing.JButton btnMC;
@@ -1211,11 +1490,13 @@ public class frmCalculadora extends javax.swing.JFrame {
     public javax.swing.JButton btnRaizY;
     public javax.swing.JButton btnResta;
     public javax.swing.JButton btnResultado;
+    public javax.swing.JButton btnRetroceso;
     public javax.swing.JButton btnSeno;
     public javax.swing.JButton btnSeno1;
     public javax.swing.JButton btnSuma;
     public javax.swing.JButton btnTangente;
     public javax.swing.JButton btnTangente1;
+    public javax.swing.JButton btnXmenos1;
     public javax.swing.JButton btn_0;
     public javax.swing.JButton btn_1;
     public javax.swing.JButton btn_2;
@@ -1230,11 +1511,10 @@ public class frmCalculadora extends javax.swing.JFrame {
     public javax.swing.JButton btn_CE;
     public javax.swing.JButton btn_e;
     public javax.swing.JButton btn_pi;
-    public javax.swing.JButton jButton27;
-    public javax.swing.JButton jButton36;
     public javax.swing.JRadioButton rbtnRadianes;
     public javax.swing.JRadioButton rbtnSexages;
-    public javax.swing.JLabel txtOperaciones;
+    public javax.swing.JLabel txtMemoria;
+    public javax.swing.JLabel txtPrevio;
     public javax.swing.JLabel txtResultados;
     // End of variables declaration//GEN-END:variables
 }
