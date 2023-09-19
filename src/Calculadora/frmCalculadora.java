@@ -1,6 +1,9 @@
 package Calculadora;
 
-import java.awt.TextField;
+import java.awt.Color;
+import java.awt.Frame;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 public class frmCalculadora extends javax.swing.JFrame {
 
@@ -23,6 +26,9 @@ public class frmCalculadora extends javax.swing.JFrame {
         txtPrevio = new javax.swing.JLabel();
         txtResultados = new javax.swing.JLabel();
         txtMemoria = new javax.swing.JLabel();
+        btnMOscuro = new javax.swing.JButton();
+        btnExit = new javax.swing.JLabel();
+        btnMin = new javax.swing.JLabel();
         PanBotones = new javax.swing.JPanel();
         rbtnSexages = new javax.swing.JRadioButton();
         rbtnRadianes = new javax.swing.JRadioButton();
@@ -78,52 +84,68 @@ public class frmCalculadora extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PanPantalla.setBackground(new java.awt.Color(244, 253, 251));
+        PanPantalla.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtPrevio.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         txtPrevio.setForeground(new java.awt.Color(67, 75, 85));
         txtPrevio.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        PanPantalla.add(txtPrevio, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 441, 29));
 
         txtResultados.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
         txtResultados.setForeground(new java.awt.Color(67, 75, 85));
         txtResultados.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtResultados.setText("0");
+        PanPantalla.add(txtResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 74, 453, 50));
 
         txtMemoria.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtMemoria.setForeground(new java.awt.Color(67, 75, 85));
         txtMemoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtMemoria.setText("M");
+        PanPantalla.add(txtMemoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 28, 29));
 
-        javax.swing.GroupLayout PanPantallaLayout = new javax.swing.GroupLayout(PanPantalla);
-        PanPantalla.setLayout(PanPantallaLayout);
-        PanPantallaLayout.setHorizontalGroup(
-            PanPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanPantallaLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(PanPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(PanPantallaLayout.createSequentialGroup()
-                        .addComponent(txtMemoria, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPrevio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(txtResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-        PanPantallaLayout.setVerticalGroup(
-            PanPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanPantallaLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(PanPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPrevio, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                    .addComponent(txtMemoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        btnMOscuro.setBackground(new java.awt.Color(240, 240, 240));
+        btnMOscuro.setForeground(new java.awt.Color(0, 0, 0));
+        btnMOscuro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/darkmode_1.png"))); // NOI18N
+        btnMOscuro.setBorder(null);
+        btnMOscuro.setBorderPainted(false);
+        btnMOscuro.setContentAreaFilled(false);
+        btnMOscuro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMOscuroActionPerformed(evt);
+            }
+        });
+        PanPantalla.add(btnMOscuro, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
 
-        getContentPane().add(PanPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 110));
+        btnExit.setBackground(new java.awt.Color(255, 255, 255));
+        btnExit.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
+        btnExit.setForeground(new java.awt.Color(255, 51, 51));
+        btnExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnExit.setText("•");
+        btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExitMouseClicked(evt);
+            }
+        });
+        PanPantalla.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 15));
+
+        btnMin.setBackground(new java.awt.Color(255, 255, 255));
+        btnMin.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
+        btnMin.setForeground(new java.awt.Color(255, 153, 0));
+        btnMin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnMin.setText("•");
+        btnMin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinMouseClicked(evt);
+            }
+        });
+        PanPantalla.add(btnMin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 15));
+
+        getContentPane().add(PanPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 130));
 
         PanBotones.setBackground(new java.awt.Color(255, 255, 255));
         PanBotones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        rbtnSexages.setBackground(new java.awt.Color(255, 255, 255));
         rbtnSexages.setForeground(new java.awt.Color(67, 75, 85));
         rbtnSexages.setSelected(true);
         rbtnSexages.setText("Sexages");
@@ -134,6 +156,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
         PanBotones.add(rbtnSexages, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
+        rbtnRadianes.setBackground(new java.awt.Color(255, 255, 255));
         rbtnRadianes.setForeground(new java.awt.Color(67, 75, 85));
         rbtnRadianes.setText("Radianes");
         rbtnRadianes.addActionListener(new java.awt.event.ActionListener() {
@@ -971,13 +994,14 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
         PanBotones.add(btnResta, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 50, 50));
 
-        getContentPane().add(PanBotones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 510, 410));
+        getContentPane().add(PanBotones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 510, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnSexagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnSexagesActionPerformed
-        
+        rbtnSexages.setSelected(true);
+        rbtnRadianes.setSelected(false);
     }//GEN-LAST:event_rbtnSexagesActionPerformed
 
     private void btn_piActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_piActionPerformed
@@ -986,7 +1010,8 @@ public class frmCalculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_piActionPerformed
 
     private void rbtnRadianesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnRadianesActionPerformed
-        
+        rbtnRadianes.setSelected(true);
+        rbtnSexages.setSelected(false);
     }//GEN-LAST:event_rbtnRadianesActionPerformed
 
     private void btnCosenoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosenoActionPerformed
@@ -1273,6 +1298,86 @@ public class frmCalculadora extends javax.swing.JFrame {
         txtMemoria.setVisible(true);
     }//GEN-LAST:event_btnMmenosActionPerformed
 
+    boolean modoOsc = false;
+    
+    private void btnMOscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMOscuroActionPerformed
+        if(!modoOsc){
+            PanPantalla.setBackground(Color.decode("#212b41"));
+            PanBotones.setBackground(Color.decode("#2e3951"));
+            txtPrevio.setForeground(Color.decode("#0db387"));
+            txtResultados.setForeground(Color.decode("#0db387"));
+
+            CambiarColorBtn(btn_1);
+            CambiarColorBtn(btn_2);
+            CambiarColorBtn(btn_3);
+            CambiarColorBtn(btn_4);
+            CambiarColorBtn(btn_5);
+            CambiarColorBtn(btn_6);
+            CambiarColorBtn(btn_7);
+            CambiarColorBtn(btn_8);
+            CambiarColorBtn(btn_9);
+            CambiarColorBtn(btn_0);
+            CambiarColorBtn(btnPunto);
+            CambiarColorBtn2(btn_pi);
+            CambiarColorBtn2(btnCoseno);
+            CambiarColorBtn2(btnSeno);
+            CambiarColorBtn2(btnTangente);
+            CambiarColorBtn2(btnSeno1);
+            CambiarColorBtn2(btnCoseno1);
+            CambiarColorBtn2(btnTangente1);
+            CambiarColorBtn2(btnXmenos1);
+            CambiarColorBtn2(btnPotenciaY);
+            CambiarColorBtn2(btnPotencia2);
+            CambiarColorBtn2(btnPotencia3);
+            CambiarColorBtn2(btn10Potencia);
+            CambiarColorBtn2(btn_e);
+            CambiarColorBtn2(btnRaiz2);
+            CambiarColorBtn2(btnRaiz3);
+            CambiarColorBtn2(btnRaizY);
+            CambiarColorBtn2(btnFactorial);
+            CambiarColorBtn2(btnEXP);
+            CambiarColorBtn2(btnLogaritmo);
+            CambiarColorBtn2(btnRetroceso);
+            CambiarColorBtn2(btn_CE);
+            CambiarColorBtn2(btn_C);
+            CambiarColorBtn2(btnCambioS);
+            CambiarColorBtn2(btnPorcentaje);
+            CambiarColorBtn2(btnDivision);
+            CambiarColorBtn2(btnMultiplicacion);
+            CambiarColorBtn2(btnSuma);
+            CambiarColorBtn2(btnResta);
+            CambiarColorBtn2(btnInversa);
+            CambiarColorBtn2(btnMC);
+            CambiarColorBtn2(btnMR);
+            CambiarColorBtn2(btnMS);
+            CambiarColorBtn2(btnMmas);
+            CambiarColorBtn2(btnMmenos);
+
+            btnMOscuro.setIcon(new ImageIcon(getClass().getResource("/Imagenes/darkmode_2.png")));
+            btnResultado.setIcon(new ImageIcon(getClass().getResource("/Imagenes/btn3_dark.png")));
+            btnResultado.setPressedIcon(new ImageIcon(getClass().getResource("/Imagenes/btn3_dark.png")));
+            btnResultado.setRolloverIcon(new ImageIcon(getClass().getResource("/Imagenes/btn3_pressed_dark.png")));
+            btnResultado.setForeground(Color.white);
+            rbtnRadianes.setForeground(Color.decode("#0db387"));
+            rbtnSexages.setForeground(Color.decode("#0db387"));
+            rbtnRadianes.setBackground(Color.decode("#2e3951"));
+            rbtnSexages.setBackground(Color.decode("#2e3951"));
+            modoOsc = true;
+        } else {
+            frmCalculadora frame = new frmCalculadora();
+            this.dispose();
+            frame.setVisible(true);
+        }     
+    }//GEN-LAST:event_btnMOscuroActionPerformed
+
+    private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnExitMouseClicked
+
+    private void btnMinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinMouseClicked
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_btnMinMouseClicked
+
     public void Numeros(String n){
         if(inicio==true){
             txtResultados.setText(" ");
@@ -1427,34 +1532,22 @@ public class frmCalculadora extends javax.swing.JFrame {
         }
     }
     
+    public void CambiarColorBtn(JButton btn){
+        btn.setIcon(new ImageIcon(getClass().getResource("/Imagenes/btn2_dark.png")));
+        btn.setPressedIcon(new ImageIcon(getClass().getResource("/Imagenes/btn2_dark.png")));
+        btn.setRolloverIcon(new ImageIcon(getClass().getResource("/Imagenes/btn1_dark.png")));
+        btn.setForeground(Color.decode("#96a8a0"));
+    }
+    
+    public void CambiarColorBtn2(JButton btn){
+        btn.setIcon(new ImageIcon(getClass().getResource("/Imagenes/btn1_dark.png")));
+        btn.setPressedIcon(new ImageIcon(getClass().getResource("/Imagenes/btn1_dark.png")));
+        btn.setRolloverIcon(new ImageIcon(getClass().getResource("/Imagenes/btn1_pressed_dark.png")));
+        btn.setForeground(Color.decode("#0db387"));
+    }
+    
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmCalculadora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmCalculadora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmCalculadora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmCalculadora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frmCalculadora().setVisible(true);
@@ -1471,12 +1564,15 @@ public class frmCalculadora extends javax.swing.JFrame {
     public javax.swing.JButton btnCoseno1;
     public javax.swing.JButton btnDivision;
     public javax.swing.JButton btnEXP;
+    public javax.swing.JLabel btnExit;
     public javax.swing.JButton btnFactorial;
     public javax.swing.JButton btnInversa;
     public javax.swing.JButton btnLogaritmo;
     public javax.swing.JButton btnMC;
+    public javax.swing.JButton btnMOscuro;
     public javax.swing.JButton btnMR;
     public javax.swing.JButton btnMS;
+    public javax.swing.JLabel btnMin;
     public javax.swing.JButton btnMmas;
     public javax.swing.JButton btnMmenos;
     public javax.swing.JButton btnMultiplicacion;
