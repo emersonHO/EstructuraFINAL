@@ -4,6 +4,14 @@ import java.awt.Color;
 import java.awt.Frame;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import Clases.ListaDoble;
+import Clases.ListaDoble.Nodo;
+
 
 public class frmCalculadora extends javax.swing.JFrame {
 
@@ -11,6 +19,8 @@ public class frmCalculadora extends javax.swing.JFrame {
     private double a,b,c,memoria = 0, resultado, valor1, valor2;
     private double cos, sin, tan, acos, asin, atan;
     private String cadena, funciones, tipoOperacion; 
+    private ListaDoble historial = new ListaDoble();
+    private JTextArea txtHistorial;
     
     public frmCalculadora() {
         initComponents();
@@ -78,6 +88,8 @@ public class frmCalculadora extends javax.swing.JFrame {
         btn_3 = new javax.swing.JButton();
         btn_0 = new javax.swing.JButton();
         btnResta = new javax.swing.JButton();
+        btn_Grafic = new javax.swing.JButton();
+        btn_Historial = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -104,7 +116,6 @@ public class frmCalculadora extends javax.swing.JFrame {
         PanPantalla.add(txtMemoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 28, 29));
 
         btnMOscuro.setBackground(new java.awt.Color(240, 240, 240));
-        btnMOscuro.setForeground(new java.awt.Color(0, 0, 0));
         btnMOscuro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/darkmode_1.png"))); // NOI18N
         btnMOscuro.setBorder(null);
         btnMOscuro.setBorderPainted(false);
@@ -434,7 +445,7 @@ public class frmCalculadora extends javax.swing.JFrame {
                 btnSumaActionPerformed(evt);
             }
         });
-        PanBotones.add(btnSuma, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, 50, 50));
+        PanBotones.add(btnSuma, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, 50, 50));
 
         btnCambioS.setBackground(new java.awt.Color(204, 204, 204));
         btnCambioS.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -746,7 +757,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         btnMultiplicacion.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         btnMultiplicacion.setForeground(new java.awt.Color(67, 75, 85));
         btnMultiplicacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
-        btnMultiplicacion.setText("*");
+        btnMultiplicacion.setText("x");
         btnMultiplicacion.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnMultiplicacion.setFocusPainted(false);
         btnMultiplicacion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -994,6 +1005,42 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
         PanBotones.add(btnResta, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 50, 50));
 
+        btn_Grafic.setBackground(new java.awt.Color(204, 204, 204));
+        btn_Grafic.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
+        btn_Grafic.setForeground(new java.awt.Color(67, 75, 85));
+        btn_Grafic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btn_Grafic.setText("G");
+        btn_Grafic.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn_Grafic.setFocusPainted(false);
+        btn_Grafic.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_Grafic.setPreferredSize(new java.awt.Dimension(50, 50));
+        btn_Grafic.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btn_Grafic.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1_pressed.png"))); // NOI18N
+        btn_Grafic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_GraficActionPerformed(evt);
+            }
+        });
+        PanBotones.add(btn_Grafic, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, 50, 50));
+
+        btn_Historial.setBackground(new java.awt.Color(204, 204, 204));
+        btn_Historial.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
+        btn_Historial.setForeground(new java.awt.Color(67, 75, 85));
+        btn_Historial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btn_Historial.setText("H");
+        btn_Historial.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn_Historial.setFocusPainted(false);
+        btn_Historial.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_Historial.setPreferredSize(new java.awt.Dimension(50, 50));
+        btn_Historial.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1.png"))); // NOI18N
+        btn_Historial.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/btn1_pressed.png"))); // NOI18N
+        btn_Historial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_HistorialActionPerformed(evt);
+            }
+        });
+        PanBotones.add(btn_Historial, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, 50, 50));
+
         getContentPane().add(PanBotones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 510, 410));
 
         pack();
@@ -1168,6 +1215,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         } else {
             txtResultados.setText("Error ...");
         }
+        pasarAListaDoble(txtPrevio.getText(), valor1);
     }//GEN-LAST:event_btnRaiz2ActionPerformed
 
     private void btnDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisionActionPerformed
@@ -1186,7 +1234,7 @@ public class frmCalculadora extends javax.swing.JFrame {
     private void btnMultiplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicacionActionPerformed
         igual = true;
         inicio = true;
-        Signos("*");
+        Signos("x");
     }//GEN-LAST:event_btnMultiplicacionActionPerformed
 
     private void btnInversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInversaActionPerformed
@@ -1216,12 +1264,15 @@ public class frmCalculadora extends javax.swing.JFrame {
             } else {
                 valor2 = Double.parseDouble(txtResultados.getText());
                 txtPrevio.setText(txtPrevio.getText()+txtResultados.getText());
-                Operaciones(valor1, valor2);
+                double resultado = Operaciones(valor1, valor2);
+                pasarAListaDoble(txtPrevio.getText(), resultado);
                 igual = false;
             }
         } else {
+            double resultado = Operaciones(valor1, valor2);
+            // Hacer algo con 'resultado', como pasarlo a la ListaDoble
+            pasarAListaDoble(txtPrevio.getText(), resultado);
             txtPrevio.setText("");
-            Operaciones(valor1, valor2);
         }
     }//GEN-LAST:event_btnResultadoActionPerformed
 
@@ -1352,7 +1403,8 @@ public class frmCalculadora extends javax.swing.JFrame {
             CambiarColorBtn2(btnMS);
             CambiarColorBtn2(btnMmas);
             CambiarColorBtn2(btnMmenos);
-
+            CambiarColorBtn2(btn_Grafic);
+            CambiarColorBtn2(btn_Historial);
             btnMOscuro.setIcon(new ImageIcon(getClass().getResource("/Imagenes/darkmode_2.png")));
             btnResultado.setIcon(new ImageIcon(getClass().getResource("/Imagenes/btn3_dark.png")));
             btnResultado.setPressedIcon(new ImageIcon(getClass().getResource("/Imagenes/btn3_dark.png")));
@@ -1377,6 +1429,41 @@ public class frmCalculadora extends javax.swing.JFrame {
     private void btnMinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinMouseClicked
         this.setState(Frame.ICONIFIED);
     }//GEN-LAST:event_btnMinMouseClicked
+
+    private void btn_GraficActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GraficActionPerformed
+        int numVertices = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de nodos (vértices):"));
+        GrafoConNodos grafo = new GrafoConNodos();
+
+        for (int i = 0; i < numVertices; i++) {
+            int valorNodo = i;
+            NodoArbol nodo = new NodoArbol(valorNodo);
+            grafo.agregarNodo(nodo);
+        }
+
+        while (true) {
+            try {
+                int origen = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nodo de origen (0-" + (numVertices - 1) + "):"));
+                int destino = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nodo de destino (0-" + (numVertices - 1) + "):"));
+                int peso = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el peso de la arista:"));
+
+                grafo.agregarArista(origen, destino, peso);
+
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Desea agregar otra arista?", "Agregar Arista", JOptionPane.YES_NO_OPTION);
+                if (opcion != JOptionPane.YES_OPTION) {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese un número válido.");
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+        }
+        grafo.mostrarArbolEnFrame();
+    }//GEN-LAST:event_btn_GraficActionPerformed
+
+    private void btn_HistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_HistorialActionPerformed
+        mostrarVentanaHistorial();
+    }//GEN-LAST:event_btn_HistorialActionPerformed
 
     public void Numeros(String n){
         if(inicio==true){
@@ -1407,47 +1494,43 @@ public class frmCalculadora extends javax.swing.JFrame {
         tipoOperacion = n;
     }
     
-    public void Operaciones(double v1, double v2){
-        switch(tipoOperacion){
+    public double Operaciones(double v1, double v2) {
+        double resultado = 0.0;
+
+        switch(tipoOperacion) {
             case "+":
-                resultado = v1+v2;
-                txtResultados.setText(resultado+" ");
-                v1 = Double.parseDouble(txtResultados.getText());
+                resultado = v1 + v2;
                 break;
             case "-":
-                resultado = v1-v2;
-                txtResultados.setText(resultado+" ");
-                v1 = Double.parseDouble(txtResultados.getText());
+                resultado = v1 - v2;
                 break;
-            case "*":
-                resultado = v1*v2;
-                txtResultados.setText(resultado+" ");
-                v1 = Double.parseDouble(txtResultados.getText());
+            case "x":
+                resultado = v1 * v2;
                 break;
             case "/":
-                if(v2==0){
+                if (v2 == 0) {
                     txtResultados.setText("Error en la operacion");
-                    break;
+                    return 0.0; // O algún valor indicativo de error
                 }
-                resultado = v1/v2;
-                txtResultados.setText(resultado+" ");
-                v1 = Double.parseDouble(txtResultados.getText());
+                resultado = v1 / v2;
                 break;
             case "potencia":
-                resultado = Math.pow(valor1, valor2);
-                txtResultados.setText(resultado+" ");
+                resultado = Math.pow(v1, v2);
                 break;
             case "raizx":
-                if(valor2<=0){
+                if (v2 <= 0) {
                     txtResultados.setText("Error...");
-                    break;
+                    return 0.0; // O algún valor indicativo de error
                 } else {
-                    txtPrevio.setText(valor2+" yroot");
-                    a=1;
-                    c=a/valor2;
-                    txtResultados.setText(Math.pow(a, c)+" ");
+                    txtPrevio.setText(v2 + " yroot");
+                    a = 1;
+                    c = a / v2;
+                    resultado = Math.pow(a, c);
                 }
         }
+
+        txtResultados.setText(resultado + " ");
+        return resultado;
     }
     
     public void Trigonometria(){
@@ -1546,6 +1629,120 @@ public class frmCalculadora extends javax.swing.JFrame {
         btn.setForeground(Color.decode("#0db387"));
     }
     
+    public void pasarAListaDoble(String operacion, Double resultado) {
+        historial.agregarElemento(operacion, resultado);
+    }
+    
+    private void mostrarVentanaHistorial() {
+        // Crear un nuevo JFrame para la ventana emergente
+        JFrame ventanaHistorial = new JFrame("Historial de Operaciones");
+        ventanaHistorial.setSize(400, 300);
+
+        // Obtener el tamaño de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Calcular la posición para centrar la ventana
+        int x = (screenSize.width - ventanaHistorial.getWidth()) / 2;
+        int y = (screenSize.height - ventanaHistorial.getHeight()) / 2;
+
+        // Establecer la posición de la ventana
+        ventanaHistorial.setLocation(x, y);
+
+        // Obtener la lista de operaciones y resultados
+        String[] historialArray = historial.obtenerHistorialComoArray();
+
+        // Crear un JTextArea para mostrar el historial
+        txtHistorial = new JTextArea();
+        txtHistorial.setFont(new Font("Arial", Font.PLAIN, 16)); // Cambiar el tamaño de la letra
+        for (String operacion : historialArray) {
+            txtHistorial.append(operacion + "\n");
+        }
+
+        // Crear botones para ordenar, buscar, eliminar y cerrar
+        JButton btnOrdenar = new JButton("Ordenar");
+        JButton btnBuscar = new JButton("Buscar");
+        JButton btnEliminar = new JButton("Eliminar");
+        JButton btnCerrar = new JButton("Cerrar");
+
+        // Agregar ActionListener a los botones
+        btnOrdenar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                historial.ordenarPorResultado();
+                actualizarTxtHistorial();
+            }
+        });
+
+        btnBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = JOptionPane.showInputDialog("Ingrese el ID a buscar:");
+                if (input != null && !input.isEmpty()) {
+                    int targetID = Integer.parseInt(input);
+                    ListaDoble.Nodo resultadoBusqueda = historial.buscarPorID(targetID);
+
+                    if (resultadoBusqueda != null) {
+                        JOptionPane.showMessageDialog(null, "Nodo encontrado:\n" +
+                                "ID: " + resultadoBusqueda.getID() + "\n" +
+                                "Operación: " + resultadoBusqueda.getOperacion() + "\n" +
+                                "Resultado: " + resultadoBusqueda.getResultado());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Nodo no encontrado.");
+                    }
+                }
+            }
+        });
+
+        btnEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = JOptionPane.showInputDialog("Ingrese el ID a eliminar:");
+                if (input != null && !input.isEmpty()) {
+                    int targetID = Integer.parseInt(input);
+                    historial.eliminarPorID(targetID);
+                    actualizarTxtHistorial();
+                }
+            }
+        });
+
+        btnCerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ventanaHistorial.dispose();  // Cerrar la ventana emergente
+            }
+        });
+
+        // Crear un panel para organizar los componentes
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(new JScrollPane(txtHistorial), BorderLayout.CENTER);
+
+        // Agregar los botones en la parte inferior del panel
+        JPanel panelBotones = new JPanel();
+        panelBotones.add(btnOrdenar);
+        panelBotones.add(btnBuscar);
+        panelBotones.add(btnEliminar);
+        panelBotones.add(btnCerrar);
+        panel.add(panelBotones, BorderLayout.SOUTH);
+
+        // Agregar el panel al JFrame
+        ventanaHistorial.add(panel);
+
+        // Hacer visible la ventana
+        ventanaHistorial.setVisible(true);
+}
+
+    // Método para actualizar el JTextArea después de realizar operaciones en la ListaDoble
+    private void actualizarTxtHistorial() {
+        String[] historialArray = historial.obtenerHistorialComoArray();
+        txtHistorial.setText("");
+        for (String operacion : historialArray) {
+            txtHistorial.append(operacion + "\n");
+        }
+    }
+
+
+    
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1605,6 +1802,8 @@ public class frmCalculadora extends javax.swing.JFrame {
     public javax.swing.JButton btn_9;
     public javax.swing.JButton btn_C;
     public javax.swing.JButton btn_CE;
+    public javax.swing.JButton btn_Grafic;
+    public javax.swing.JButton btn_Historial;
     public javax.swing.JButton btn_e;
     public javax.swing.JButton btn_pi;
     public javax.swing.JRadioButton rbtnRadianes;
